@@ -1,0 +1,109 @@
+
+{% extends "base.html" %}
+{% block title %}Admin Dashboard | CampusFlow{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">ADMINISTRATION PORTAL</p>
+        <h1>Admin Dashboard</h1>
+        <p>Manage and resolve campus complaints.</p>
+    </div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <p>Total Complaints</p>
+        <h2>{{ stats.total }}</h2>
+    </div>
+    <div class="stat-card">
+        <p>Pending</p>
+        <h2>{{ stats.pending }}</h2>
+    </div>
+    <div class="stat-card">
+        <p>In Progress</p>
+        <h2>{{ stats.progress }}</h2>
+    </div>
+    <div class="stat-card">
+        <p>Resolved</p>
+        <h2>{{ stats.resolved }}</h2>
+    </div>
+</div>
+
+<div class="section-heading">
+    <h2>Manage Complaints</h2>
+</div>
+
+<form method="GET" class="filter-form">
+    <input type="text" name="search" placeholder="Search title, location or student..."
+           value="{{ request.args.get('search', '') }}">
+
+    <select name="status">
+        <option value="">All Statuses</option>
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Resolved">Resolved</option>
+    </select>
+
+    <button type="submit" class="btn">Search</button>
+</form>
+
+<div class="table-wrapper">
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Student</th>
+            <th>Complaint</th>
+            <th>Category</th>
+            <th>Location</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Update</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for c in complaints %}
+        <tr>
+            <td>#{{ c.id }}</td>
+            <td>
+                {{ c.student_name }}<br>
+                <small>{{ c.student_email }}</small>
+            </td>
+            <td>
+                <strong>{{ c.title }}</strong><br>
+                <small>{{ c.description }}</small>
+            </td>
+            <td>{{ c.category }}</td>
+            <td>{{ c.location }}</td>
+            <td>{{ c.priority }}</td>
+            <td>
+                <span class="status {{ c.status|lower|replace(' ', '-') }}">
+                    {{ c.status }}
+                </span>
+            </td>
+            <td>
+                <form method="POST"
+                      action="{{ url_for('update_status', complaint_id=c.id) }}"
+                      class="update-form">
+
+                    <select name="status">
+                        <option value="Pending" {% if c.status == 'Pending' %}selected{% endif %}>Pending</option>
+                        <option value="In Progress" {% if c.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                        <option value="Resolved" {% if c.status == 'Resolved' %}selected{% endif %}>Resolved</option>
+                    </select>
+
+                    <button class="btn small-btn" type="submit">Save</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="8" class="empty">No complaints found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

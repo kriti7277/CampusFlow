@@ -1,0 +1,65 @@
+
+{% extends "base.html" %}
+{% block title %}Student Dashboard | CampusFlow{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">STUDENT PORTAL</p>
+        <h1>Hello, {{ session.get('name') }}! 👋</h1>
+        <p>Here's an overview of your complaints.</p>
+    </div>
+    <a href="{{ url_for('submit_complaint') }}" class="btn">+ New Complaint</a>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <p>Total Complaints</p>
+        <h2>{{ stats.total }}</h2>
+    </div>
+    <div class="stat-card">
+        <p>Pending</p>
+        <h2>{{ stats.pending }}</h2>
+    </div>
+    <div class="stat-card">
+        <p>In Progress</p>
+        <h2>{{ stats.progress }}</h2>
+    </div>
+    <div class="stat-card">
+        <p>Resolved</p>
+        <h2>{{ stats.resolved }}</h2>
+    </div>
+</div>
+
+<div class="section-heading">
+    <h2>Recent Complaints</h2>
+    <a href="{{ url_for('my_complaints') }}">View All →</a>
+</div>
+
+<div class="table-wrapper">
+<table>
+    <thead>
+        <tr>
+            <th>Complaint</th>
+            <th>Category</th>
+            <th>Location</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in complaints %}
+        <tr>
+            <td>{{ c.title }}</td>
+            <td>{{ c.category }}</td>
+            <td>{{ c.location }}</td>
+            <td><span class="status {{ c.status|lower|replace(' ', '-') }}">{{ c.status }}</span></td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4" class="empty">You haven't submitted any complaints yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

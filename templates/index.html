@@ -1,0 +1,60 @@
+
+{% extends "base.html" %}
+{% block title %}Home | CampusFlow{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="eyebrow">WELCOME TO CAMPUSFLOW</p>
+        <h1>Your Campus.<br>Your Voice.<br><span>Your Solution.</span></h1>
+        <p class="hero-text">
+            A smarter way to report campus problems,
+            track complaints, and make your college better.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="{{ url_for('register') }}" class="btn">Get Started</a>
+            <a href="{{ url_for('login') }}" class="btn secondary">Login</a>
+        </div>
+    </div>
+
+    <div class="hero-card">
+        <div class="hero-icon">🏫</div>
+        <h2>Make your campus better</h2>
+        <p>Report issues. Follow progress. See solutions.</p>
+        <div class="mini-status">
+            <span>●</span> Easy complaint tracking
+        </div>
+        <div class="mini-status">
+            <span>●</span> Faster issue management
+        </div>
+        <div class="mini-status">
+            <span>●</span> Transparent updates
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <h2>How CampusFlow Works</h2>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-icon">📝</div>
+            <h3>Report Issues</h3>
+            <p>Submit complaints about campus facilities easily.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h3>Track Progress</h3>
+            <p>Check the current status of your complaints.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">✅</div>
+            <h3>Get Solutions</h3>
+            <p>Follow your complaint until it gets resolved.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

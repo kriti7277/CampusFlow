@@ -1,0 +1,29 @@
+
+{% extends "base.html" %}
+{% block title %}Register | CampusFlow{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <h1>Create Account</h1>
+    <p>Join CampusFlow and make your campus better.</p>
+
+    <form method="POST">
+        <label>Full Name</label>
+        <input type="text" name="name" placeholder="Your full name" required>
+
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="Your email" required>
+
+        <label>Password</label>
+        <input type="password" name="password"
+               placeholder="Minimum 8 characters" minlength="8" required>
+
+        <button type="submit" class="btn full">Register</button>
+    </form>
+
+    <p class="form-bottom">
+        Already registered?
+        <a href="{{ url_for('login') }}">Login here</a>
+    </p>
+</div>
+{% endblock %}

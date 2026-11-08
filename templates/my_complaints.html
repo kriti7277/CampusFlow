@@ -1,0 +1,51 @@
+
+{% extends "base.html" %}
+{% block title %}My Complaints | CampusFlow{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">STUDENT PORTAL</p>
+        <h1>My Complaints</h1>
+        <p>View and track all your submitted complaints.</p>
+    </div>
+    <a href="{{ url_for('submit_complaint') }}" class="btn">+ New Complaint</a>
+</div>
+
+<form method="GET" class="filter-form">
+    <select name="status">
+        <option value="">All Complaints</option>
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Resolved">Resolved</option>
+    </select>
+    <button class="btn" type="submit">Filter</button>
+</form>
+
+<div class="complaint-grid">
+    {% for c in complaints %}
+    <div class="complaint-card">
+        <div class="complaint-top">
+            <span class="category">{{ c.category }}</span>
+            <span class="status {{ c.status|lower|replace(' ', '-') }}">{{ c.status }}</span>
+        </div>
+
+        <h3>#{{ c.id }} - {{ c.title }}</h3>
+        <p>{{ c.description }}</p>
+
+        <div class="complaint-details">
+            <span>📍 {{ c.location }}</span>
+            <span>⚡ {{ c.priority }} Priority</span>
+        </div>
+
+        <small>Submitted: {{ c.created_at }}</small>
+    </div>
+    {% else %}
+    <div class="empty-card">
+        <h3>No complaints found.</h3>
+        <p>Submit your first complaint to get started.</p>
+        <a href="{{ url_for('submit_complaint') }}" class="btn">Submit Complaint</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
